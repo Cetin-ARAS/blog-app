@@ -43,7 +43,6 @@ SOLUTION
 ├── .env
 ├── package.json
 └── yarn.lock
-Expected Outcome
 
 
 

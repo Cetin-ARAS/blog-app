@@ -1,96 +1,167 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import React from "react";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import cwJpeg from "../assets/cw.jpeg";
+import {
+  AppBar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
+import { spacing } from "@mui/system";
+
+const styles = {
+  grow: {
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: spacing(2),
   },
   title: {
-    flexGrow: 1,
+    display: { xs: "none", sm: "block" },
+    fontFamily: "Girassol",
+    "& span": {
+      fontSize: 30,
+      color: "wheat",
+    },
   },
-}));
+  login: {
+    padding: 10,
+    fontSize: 20,
+    color: "white",
+    textDecoration: "none",
+  },
+  register: {
+    fontSize: 20,
+    padding: 10,
+    color: "white",
+    textDecoration: "none",
+  },
+  maxWidthLogReg: {
+    textDecoration: "none",
+    color: "black",
+  },
+  cwImg: {
+    width: 40,
+  },
+  appBar: {
+    backgroundColor: "#046582",
+  },
+  linkStyle: {
+    textDecoration: "none",
+    color: "black",
+  },
+};
 
-export default function Navbar() {
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
+export default function PrimarySearchAppBar() {
+  // const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  const isMenuOpen = Boolean(anchorEl);
 
-  const handleMenu = (event) => {
+  const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    handleMenuClose();
+    logout();
+  };
+
+  const handleDashboard = () => {
+    navigate("/");
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <>
+      {currentUser?.email ? (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+          sx={{ marginTop: "2rem", marginLeft: "1rem" }}
+        >
+          <Link to="/profile" style={styles.linkStyle}>
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          </Link>
+          <Link to="/new-blog" style={styles.linkStyle}>
+            <MenuItem onClick={handleMenuClose}>New</MenuItem>
+          </Link>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
+      ) : (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+          sx={{ marginTop: "2rem", marginLeft: "1.25rem" }}
+        >
+          <Link to="/login" style={styles.linkStyle}>
+            <MenuItem onClick={handleMenuClose}>Login</MenuItem>
+          </Link>
+          <Link to="/register" style={styles.linkStyle}>
+            <MenuItem onClick={handleMenuClose}>Register</MenuItem>
+          </Link>
+        </Menu>
+      )}
+    </>
+  );
+
   return (
-    <div className={classes.root}>
-      <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
-      <AppBar position="static">
+    <div style={styles.grow}>
+      <AppBar position="fixed" sx={styles.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton
+            edge="start"
+            sx={styles.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDashboard}
+          >
+            <img src={cwJpeg} alt="cw" style={styles.cwImg} />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Photos
-          </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )}
+          <div style={styles.grow} />
+          <Link to="/" style={styles.login}>
+            <Typography sx={styles.title} variant="h6" noWrap>
+              ──── <span>{"<ed8en/>"}</span> Blog ────
+            </Typography>
+          </Link>
+          <div style={styles.grow} />
+          <div>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
+
+      {renderMenu}
     </div>
   );
 }

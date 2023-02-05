@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import BlogForm from "../components/BlogForm";
 import { useNavigate } from "react-router-dom";
 import { useBlog } from "../contexts/BlogContext";
-import { toastSuccessNotify } from "../helpers/ToastNotify";
+import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 
 const NewBlog = () => {
   const { currentUser } = useAuth();
@@ -28,6 +28,7 @@ const NewBlog = () => {
       toastSuccessNotify("Blog added successfully!");
     } catch (error) {
       console.log("Error", error);
+      toastErrorNotify("Blog can not be added");
     }
   };
 

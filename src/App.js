@@ -1,12 +1,12 @@
 import "./App.css"
-import Navbar from "./components/Navbar"
+import AppRouter from "./approuter/AppRouter"
 import AuthContext from "./contexts/AuthContext"
 
 const App = () => {
   return (
     <div className="App">
       <AuthContext>
-        <Navbar />
+        <AppRouter />
       </AuthContext>
       
     </div>

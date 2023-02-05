@@ -142,7 +142,7 @@ export default function PrimarySearchAppBar() {
           <div style={styles.grow} />
           <Link to="/" style={styles.login}>
             <Typography sx={styles.title} variant="h6" noWrap>
-              ──── <span>{"<ed8en/>"}</span> Blog ────
+              ──── <span>{"<CeTiN/>"}</span> Blog ────
             </Typography>
           </Link>
           <div style={styles.grow} />

@@ -47,6 +47,7 @@ const styles = {
     backgroundPosition: "center",
     width: "100%",
     paddingTop: "40px",
+    height:"100vh",
   },
   paper: {
     padding: 4,

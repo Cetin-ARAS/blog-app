@@ -19,6 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { height } from "@mui/system";
 
 const validationSchema = yup.object({
   email: yup
@@ -47,6 +48,9 @@ const styles = {
     backgroundPosition: "center",
     width: "100%",
     paddingTop: "40px",
+    height:"100vh",
+
+  
   },
   paper: {
     padding: 4,
@@ -141,7 +145,7 @@ function Register() {
   return (
     <Grid container component="main" sx={styles.root}>
       <CssBaseline />
-      <Grid container justifyContent="center" sx={styles.image}>
+      <Grid container justifyContent="center"  sx={styles.image }>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box sx={styles.paper}>
             <Avatar sx={styles.avatar}>

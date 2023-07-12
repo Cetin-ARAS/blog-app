@@ -50,7 +50,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({ post }) {  //* burada doğrudan destructor yapıldı
+export default function MediaCard({ post }) {  
   const {
     id,
     author,

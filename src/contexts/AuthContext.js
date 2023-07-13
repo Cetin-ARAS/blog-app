@@ -57,7 +57,7 @@ export function AuthProvider({ children }) {
     logout,
     loginWithGoogle,
   };
-// console.log(children);
+  // console.log(children);
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
